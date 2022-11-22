@@ -48,6 +48,7 @@ class DoMusic:
 
         all_videos = yt.streams.filter(file_extension='mp4', only_audio=True)
         best_audio = self.get_best_audio_quality(all_videos)
+        thumbnail = self.get_video_thumbnail(yt.thumbnail_url)
         best_audio.stream_to_buffer(buffer)
 
         audio_file = mp4.MP4(fileobj=buffer)
@@ -55,17 +56,9 @@ class DoMusic:
 
         audio_file['\xa9ART'] = yt.author
         audio_file['\xa9nam'] = yt.title
+        audio_file["covr"] = [
+            mp4.MP4Cover(thumbnail, imageformat=mp4.MP4Cover.FORMAT_JPEG)
+        ]
 
         audio_file.save(buffer)
         return buffer
-
-
-a = DoMusic()
-url = 'https://www.youtube.com/watch?v=D0kGKh4npMw'
-print(a.get_video_info(url))
-
-print('downloading...')
-audio = a.download_audio(url)
-
-with open('test.mp3', 'wb') as writer:
-    writer.write(audio.getbuffer())
