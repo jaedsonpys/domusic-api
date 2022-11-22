@@ -23,7 +23,8 @@ class DoMusic:
             'views': views,
             'thumbnail_url': thumbnail_url,
             'title': best_video.title,
-            'size': best_video.filesize
+            'size': best_video.filesize,
+            'url': yt.watch_url
         }
 
         return video_info
