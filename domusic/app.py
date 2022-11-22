@@ -2,6 +2,7 @@ from mathiz import Mathiz
 from mathiz import request
 
 from .domusic import DoMusic
+from .exceptions import InvalidVideoIDError
 
 app = Mathiz()
 domusic = DoMusic()
@@ -11,7 +12,11 @@ domusic = DoMusic()
 def get_video_info():
     video_id = request.parameters.get('video_id')
     url = f'https://www.youtube.com/watch?v={video_id}'
-    video_info = domusic.get_video_info(url)
+    
+    try:
+        video_info = domusic.get_video_info(url)
+    except InvalidVideoIDError:
+        return {'status': 'error', 'error': 'invalid_video_id'}, 400
 
     return video_info
 
