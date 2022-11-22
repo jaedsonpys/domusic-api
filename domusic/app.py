@@ -11,8 +11,8 @@ app = Mathiz()
 domusic = DoMusic()
 
 
-@app.route('/video/info')
-def get_video_info():
+@app.route('/audio/info')
+def get_audio_info():
     body = request.body
 
     if not body:
@@ -29,15 +29,15 @@ def get_video_info():
         return {'status': 'error', 'msg': 'url_expected'}, 400
     
     try:
-        video_info = domusic.get_video_info(url)
+        audio_info = domusic.get_video_info(url)
     except InvalidVideoIDError:
         return {'status': 'error', 'msg': 'invalid_video_id'}, 400
 
-    return video_info
+    return audio_info
 
 
-@app.route('/video/download')
-def download_video():
+@app.route('/audio/download')
+def download_audio():
     body = request.body
 
     if not body:
