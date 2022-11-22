@@ -1,2 +1,5 @@
 venv/
+__pycache__/
+
+run_server.py
 *.m4a
