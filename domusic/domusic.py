@@ -1,6 +1,7 @@
 import io
 
 import pytube
+from mutagen import mp4, id3
 
 
 class DoMusic:
@@ -34,7 +35,7 @@ class DoMusic:
             'url': yt.watch_url
         }
 
-        return video_info
+        return video_info        
 
     def download_audio(self, url: str) -> io.BytesIO:
         yt = pytube.YouTube(url)
@@ -43,4 +44,12 @@ class DoMusic:
         all_videos = yt.streams.filter(file_extension='mp4', only_audio=True)
         best_audio = self.get_best_audio_quality(all_videos)
         best_audio.stream_to_buffer(buffer)
+
+        audio_file = mp4.MP4(fileobj=buffer)
+        audio_file.add_tags()
+
+        audio_file['TPE1'] = id3.TPE1(encoding=3, text=yt.author)
+        audio_file['TIT2'] = id3.TIT2(encoding=3, text=yt.title)
+        audio_file.save(buffer)
+
         return buffer
