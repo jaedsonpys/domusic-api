@@ -1,1 +1,4 @@
+http-pyparser==0.4.1
+mathiz==0.2.0
 pytube==12.1.0
+wsblib==0.4.0
