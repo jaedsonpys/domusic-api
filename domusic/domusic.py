@@ -38,7 +38,7 @@ class DoMusic:
             'views': views,
             'thumbnail_url': thumbnail_url,
             'title': best_audio.title,
-            'size': best_audio.filesize,
+            'minutes': yt.length,
             'url': yt.watch_url
         }
 
