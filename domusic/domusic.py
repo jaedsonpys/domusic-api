@@ -4,6 +4,8 @@ import pytube
 import requests
 from mutagen import mp4, id3
 
+from .exceptions import InvalidVideoIDError
+
 
 class DoMusic:
     def get_best_audio_quality(self, all_videos: pytube.StreamQuery) -> pytube.Stream:
@@ -18,7 +20,11 @@ class DoMusic:
         return best_video
 
     def get_video_info(self, url: str) -> dict:
-        yt = pytube.YouTube(url)
+        try:
+            yt = pytube.YouTube(url)
+        except pytube.exceptions.RegexMatchError:
+            raise InvalidVideoIDError('Invalid video ID')
+
         all_videos = yt.streams.filter(file_extension='mp4', only_audio=True)
 
         best_audio = self.get_best_audio_quality(all_videos)
@@ -43,7 +49,11 @@ class DoMusic:
         return req.content
 
     def download_audio(self, url: str) -> io.BytesIO:
-        yt = pytube.YouTube(url)
+        try:
+            yt = pytube.YouTube(url)
+        except pytube.exceptions.RegexMatchError:
+            raise InvalidVideoIDError('Invalid video ID')
+
         buffer = io.BytesIO()
 
         all_videos = yt.streams.filter(file_extension='mp4', only_audio=True)
