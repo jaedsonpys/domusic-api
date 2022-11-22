@@ -1,3 +1,5 @@
+import io
+
 import pytube
 
 
@@ -33,3 +35,12 @@ class DoMusic:
         }
 
         return video_info
+
+    def download_audio(self, url: str) -> io.BytesIO:
+        yt = pytube.YouTube(url)
+        buffer = io.BytesIO()
+
+        all_videos = yt.streams.filter(file_extension='mp4', only_audio=True)
+        best_audio = self.get_best_audio_quality(all_videos)
+        best_audio.stream_to_buffer(buffer)
+        return buffer
