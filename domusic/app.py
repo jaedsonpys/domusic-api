@@ -24,12 +24,16 @@ def get_audio_info():
             return {'status': 'error', 'msg': 'invalid_json_data'}, 400
 
     url = data.get('url')
+    query = data.get('query')
 
-    if not url:
-        return {'status': 'error', 'msg': 'url_expected'}, 400
+    if not url or not query:
+        return {'status': 'error', 'msg': 'url_or_query_expected'}, 400
     
     try:
-        audio_info = domusic.get_video_info(url)
+        if url:
+            audio_info = domusic.get_video_info(url)
+        elif query:
+            audio_info = domusic.search_video(query)
     except InvalidVideoIDError:
         return {'status': 'error', 'msg': 'invalid_video_id'}, 400
 
