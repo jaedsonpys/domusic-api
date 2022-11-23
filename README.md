@@ -13,3 +13,14 @@ pip install -r requirements.txt
 ```
 
 > We recommend using `Virtual Environment` for better organization of packages.
+
+# License
+
+```
+BSD 3-Clause License
+
+Copyright (c) 2022, Jaedson Silva
+All rights reserved.
+```
+
+This project uses `BSD 3-Clause License`, please [see LICENSE file](https://github.com/jaedsonpys/domusic-api/blob/master/LICENSE) for more informations.
