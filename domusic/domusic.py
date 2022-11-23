@@ -3,7 +3,7 @@ import io
 import pytube
 import requests
 import youtubesearchpython as ytsearch
-from mutagen import mp4, id3
+from mutagen import mp4
 
 from .exceptions import InvalidVideoIDError
 
