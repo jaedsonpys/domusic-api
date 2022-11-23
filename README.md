@@ -1,6 +1,6 @@
 # DoMusic API
 
-Search and download music directly from the API in a simple way. Data like thumbnail and artist name are tags written in the audio file.
+Search and download music directly from the API in a simple way. Data like thumbnail and artist name are tags written in the audio file. The API uses the [Mathiz framework](https://github.com/firlast/mathiz).
 
 ## Running API
 
