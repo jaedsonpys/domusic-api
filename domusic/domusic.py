@@ -2,6 +2,7 @@ import io
 
 import pytube
 import requests
+import youtubesearchpython as ytsearch
 from mutagen import mp4, id3
 
 from .exceptions import InvalidVideoIDError
@@ -43,6 +44,23 @@ class DoMusic:
         }
 
         return video_info
+
+    def search_video(self, query: str) -> dict:
+        search = ytsearch.VideosSearch(query)
+        result = search.result()
+        all_videos = []
+
+        for video in result['result']:
+            all_videos.append({
+                'author': video['channel']['name'],
+                'views': video['viewCount']['short'],
+                'thumbnail_url': video['thumbnails'][0]['url'],
+                'title': video['title'],
+                'minutes': video['duration'],
+                'url': video['link']
+            })
+
+        return all_videos
 
     def get_video_thumbnail(self, thumbnail_url: str) -> bytes:
         req = requests.get(thumbnail_url)
